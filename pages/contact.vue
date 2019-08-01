@@ -30,7 +30,6 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #f9fcff;
 }
 
 .title {
@@ -40,7 +39,7 @@ export default {
   font-weight: 300;
   font-size: 100px;
   color: #35495e;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .subtitle {
