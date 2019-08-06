@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Logo from '~/components/Logo.vue'
 import Navi from '~/components/Navi.vue'
 
@@ -58,6 +59,16 @@ export default {
     execute () {
       // 独自イベントclick.triggerを発火
       // bus.$emit('click.trigger');
+      this.$store.commit('console', 'hoge')
+      console.log(this.$store.state.console)
+    },
+    getResults () {
+      axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=9&q=GITADORA&type=video&key=AIzaSyA25r9qCpM7ZPCw3_D8M7XcocSGFW-m-sk').then((res) => {
+        console.log(res.data.items)
+        this.items = res.data.items
+      }).catch((res) => {
+        console.log(res)
+      })
     }
   }
 }

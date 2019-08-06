@@ -1,12 +1,9 @@
 export const state = () => ({
-  user: null
+  console: null
 })
 
 export const mutations = {
-  login(state, user) {
-    state.user = user
-  },
-  logout(state) {
-    state.user = null
+  console (state, data) {
+    state.console = data
   }
 }
