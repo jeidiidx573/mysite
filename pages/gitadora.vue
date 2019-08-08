@@ -28,13 +28,20 @@
          </div>
          <div class="card-link">
            <p>Drum</p>
-           <a href="#" class="bas trigger" id="js-trigger" @click="execute">      {{ item.d_bas }}</a>
+           <a href="#" class="bas" @click="open">{{ item.d_bas }}</a>
            <a href="#" class="adv">{{ item.d_adv }}</a>
            <a href="#" class="ext">{{ item.d_ext }}</a>
          </div>
        </section>
       </div>
     </div>
+    <transition name="modal">
+      <div class="modal" v-show="$store.state.opened" @click.self="close">
+        <div class="modal__content">
+          <p>This background layer will fade in and fade out</p>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -52,15 +59,15 @@ export default {
     return {
       items: [
         { title: '0時20分のRoulette', artist: '04 Limited Sazabys', bpm: '217', version: 'Matixx', img: 'https://p.eagate.573.jp/game/gfdm/gitadora_exchain/p/eam/playdata/img.html?imgkey=music_skill_gitadora-exchain_MUSIC_INFO&imgid=0&83053065123888274822576331599402', d_bas: '2.85', d_adv: '5.90', d_ext: '7.20' }
-      ]
+      ],
     }
   },
   methods: {
-    execute () {
-      // 独自イベントclick.triggerを発火
-      // bus.$emit('click.trigger');
-      this.$store.commit('console', 'hoge')
-      console.log(this.$store.state.console)
+    open () {
+      this.$store.commit('modalTrigger', true)
+    },
+    close () {
+      this.$store.commit('modalTrigger', false)
     },
     getResults () {
       axios.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=9&q=GITADORA&type=video&key=AIzaSyA25r9qCpM7ZPCw3_D8M7XcocSGFW-m-sk').then((res) => {
@@ -176,22 +183,6 @@ export default {
   display: inline-block;
   padding-bottom: 4px;
   position: relative;
-}
-.card-link a::after {
-  background-color: tomato;
-  bottom: 0;
-  content: '';
-  display: block;
-  height: 1px;
-  left: 0;
-  position: absolute;
-  transition: .2s all;
-  width: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.card-link a:hover::after {
-  width: 100%;
 }
 .card-link a.bas { color: #5297ff; }
 .card-link a.bas::after { background-color: #5297ff; }
